@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import UserPofile from "./UserProfile";
-import { WorkspaceList } from "../Sidebar";
+import { WorkspaceList } from "../sidebar";
 import { LogoutSeq } from "../login";
 
 import logo from "../../asset/logo/nodeBook_Logo_horizon_blue.png";
@@ -8,7 +8,7 @@ import logo from "../../asset/logo/nodeBook_Logo_horizon_blue.png";
 export default function Sidebar() {
     return (
         <StSidebar>
-            <StLogo src={logo}/>
+            <StLogo src={logo} />
             <UserPofile />
             <LogoutSeq />
             <WorkspaceList />
