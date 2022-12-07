@@ -1,14 +1,14 @@
 import styled from "styled-components";
 
-import { AddMember, EditMember } from "../topbar";
+import { AddMember, EditMember, Input_searching } from "../topbar";
+//import { Input_searching } from "../topbar";
 
 export default function Topbar(props) {
-    
-
     return (
         <>
-            <AddMember/>
-            <EditMember/>
+            <AddMember />
+            <EditMember />
+            <Input_searching />
             <StChangeButton onClick={props.changeView}> change view </StChangeButton>
         </>
     );

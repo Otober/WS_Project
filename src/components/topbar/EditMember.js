@@ -36,7 +36,7 @@ export default function EditMember(props) {
             outline: "none",
             zIndex: 10
         }
-    }} = props;
+    } } = props;
 
     const currentWorkspace = useRecoilValue(workspaceState);
     const userState = useRecoilValue(isLoginState);
@@ -48,8 +48,8 @@ export default function EditMember(props) {
         event.preventDefault();
         try {
             let server = config.ip + config.port;
-            let params = {workspace_id: currentWorkspace.id}
-            const res = await axios.post(server+'/workspace/workspace_member', params);
+            let params = { workspace_id: currentWorkspace.id }
+            const res = await axios.post(server + '/workspace/workspace_member', params);
             if (res.status == 200) setMember(res.data);
         }
         catch (error) { console.log(error); }
@@ -59,8 +59,8 @@ export default function EditMember(props) {
         event.preventDefault();
         try {
             let server = config.ip + config.port;
-            let params = {workspace_id: currentWorkspace.id, user_id: userId}
-            const res = await axios.post(server+'/workspace/del_workspace_member', params);
+            let params = { workspace_id: currentWorkspace.id, user_id: userId }
+            const res = await axios.post(server + '/workspace/del_workspace_member', params);
             if (res.status == 200) getMember(event);
             else console.log(res.status);
         }
@@ -69,7 +69,7 @@ export default function EditMember(props) {
 
     return (
         <>
-            <StButton onClick={(e)=>{setInvite(true); getMember(e);}}>
+            <StButton onClick={(e) => { setInvite(true); getMember(e); }}>
                 맴버 수정
             </StButton>
 
@@ -78,12 +78,12 @@ export default function EditMember(props) {
                 style={style}
             >
                 <StLabel>맴버 수정하기</StLabel>
-                <StButton onClick={()=>{setInvite(false)}}>X</StButton>
+                <StButton onClick={() => { setInvite(false) }}>X</StButton>
                 <StLabel>Workspace: {currentWorkspace.title}</StLabel>
-                { member.map(ele=>{
+                {member.map(ele => {
                     if (ele.id == userState.id) return null;
                     return (
-                        <StButton key={ele.id} onClick={e=>delMember(e, ele.id) }>
+                        <StButton key={ele.id} onClick={e => delMember(e, ele.id)}>
                             {ele.name}
                         </StButton>
                     );

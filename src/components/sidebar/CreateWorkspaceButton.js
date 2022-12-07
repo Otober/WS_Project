@@ -22,14 +22,14 @@ export default function CreateWorkspaceButton(props) {
     const createWorkspace = async (event) => {
         try {
             let error, server = config.ip + config.port;
-            var params = {title: createInput, own_user_id: userState.id};
-            const addRes = await axios.post(server+'/workspace/add', params);
+            var params = { title: createInput, own_user_id: userState.id };
+            const addRes = await axios.post(server + '/workspace/add', params);
             if (addRes.status == 200) {
-                params = {id: userState.id};
-                const workspaceRes = await axios.get(server+'/workspace/get_list', {params: params});
+                params = { id: userState.id };
+                const workspaceRes = await axios.get(server + '/workspace/get_list', { params: params });
                 if (workspaceRes.status == 200) {
                     setWorkspaceData(workspaceRes.data);
-                    setCurrentWorkspace(workspaceRes.data.find((ele)=>ele.title == createInput));
+                    setCurrentWorkspace(workspaceRes.data.find((ele) => ele.title == createInput));
                     setCreateState('completed');
                     return;
                 }
@@ -85,13 +85,13 @@ export default function CreateWorkspaceButton(props) {
     const createChange = {
         click: createHandle,
         input: createInputChange
-    }  
+    }
 
     return (
         <>
-            <StButton onClick={()=>setCreateState('input')}>
+            <StButton onClick={() => setCreateState('input')}>
                 New
-            </StButton> 
+            </StButton>
             <CreatePopup
                 isOpen={createState != 'closed'}
                 data={createData}
