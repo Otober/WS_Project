@@ -3,23 +3,46 @@ import { useState } from "react";
 
 import { useRecoilValue } from "recoil";
 import { nodeData, groupData } from "../../utils/atom";
+import { DeleteGroup } from "../Board";
 
 export default function ListView(props) {
   const nodes = useRecoilValue(nodeData);
   const groups = useRecoilValue(groupData);
+
+  const [deleteState, setDeleteState] = useState('closed');
+  const [deleteButton, showDeleteButton] = useState(-1);
+  const [deleteGroup, setDeleteGroup] = useState({title: '', id: -1});
 
   if (props.activate) {
     return(
         <StList>
         {groups.map((group) => {
           return (
-            <StGroup key={group.id}>
-              <StGroupName> {group.title} </StGroupName>
+            <>
+            <StGroup>
+              <StGroupName onClick={()=>props.addGroup('input')}>
+                +
+              </StGroupName>
+            </StGroup>
+
+            <StGroup 
+              key={group.id}
+              onMouseEnter={e=>showDeleteButton(group.id)}
+              onMouseLeave={e=>showDeleteButton(-1)}
+            >
+              <StGroupName>
+                {group.title}
+                { deleteButton == group.id ? 
+                  <StDeleteButton onClick={()=>{setDeleteGroup(group); setDeleteState('input')}}>
+                    Delete
+                  </StDeleteButton>
+                : null }
+               </StGroupName>
               {nodes.filter(node => node.group_id === group.id)
                 .map((node) => {
                   return (
-                    <StBookNode key={node.id} onClick={()=>props.setOutAct(true)}> 
-                      <StBookName> 
+                    <StBookNode key={node.id} onClick={()=>props.clickHandle(node)}> 
+                      <StBookName>
                         {node.title} 
                       </StBookName>
                       <p style={{fontFamily: 'sans-serif'}}>{node.url}</p>
@@ -27,9 +50,22 @@ export default function ListView(props) {
                   );
                 }
               )}
+
+              <StBookNode onClick={()=>props.addBookmark(group.id)}>
+                <p>
+                  + New Bookmark 
+                </p>
+              </StBookNode>
             </StGroup>
+            </>
           );
         })}
+        <DeleteGroup
+          deleteState={deleteState}
+          group={deleteGroup}
+          setDeleteState={setDeleteState}
+        />
+
       </StList>
     );
   }
@@ -79,3 +115,20 @@ const StBookName = styled.p`
   font-size: 20px;
 `;
 
+const StDeleteButton = styled.button`
+    margin: 0px
+    display: inline-block;
+    margin: 0px 0px 16px;
+    width:40px;
+    height: 21px;
+    font-size: 11px;
+    font-wight: bold;
+    background-color: transparent;
+    border: #474747 solid 0.2px;
+    color: #474747;
+    &:hover {
+        background-color: white;
+        border-color: black;
+        color: black;
+    }
+`;
