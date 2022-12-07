@@ -1,39 +1,52 @@
 import { useState } from "react";
 import styled, { keyframes } from "styled-components"
 
+import jquery from 'jquery';
+import $ from 'jquery';
+
 import { GraphView, ListView } from "../view";
 
 import Topbar from "./Topbar";
+import { wrap } from "lodash";
 
 export default function Board() {
-    const [viewState, setView] = useState(false);
-    const [leftslide, setleftslide] = useState(false);
+  const [viewState, setView] = useState(false);
+  const [leftslide, setleftslide] = useState(false);
 
-    const changeView = (event) => {
-        setView(!viewState);
-    }
+  const changeView = (event) => {
+    setView(!viewState);
+  }
 
-    return (
-        <StBoard>
-            <StBoardHeader>
-                <Topbar
-                    changeView={changeView}
-                />
-            </StBoardHeader>
 
-            <StViewDiv slideAct={leftslide}>
-                <ListView 
-                    activate={viewState}
-                    setOutAct={setleftslide}
-                />
-                <GraphView
-                    activate={!viewState}
-                    backgroundColor='rgba(255,255,255,1.0)'
-                />
-            </StViewDiv>
-            <StInform slideAct={leftslide}>test</StInform>
-        </StBoard>
-    );
+
+  return (
+
+    <StBoard>
+      <StBoardHeader>
+        <Topbar
+          changeView={changeView}
+        />
+      </StBoardHeader>
+
+      <StViewDiv slideAct={leftslide}>
+        <ListView
+          activate={viewState}
+          setOutAct={setleftslide}
+        />
+        <GraphView
+          activate={!viewState}
+          backgroundColor='rgba(255,255,255,1.0)'
+        />
+
+      </StViewDiv>
+
+      <StInform slideAct={leftslide}>test
+
+        <embed src="https://youngest-programming.tistory.com/14"></embed>
+
+      </StInform>
+    </StBoard>
+  );
 }
 
 const slideLeft = keyframes`
@@ -80,6 +93,16 @@ const StInform = styled.div`
   top: 100px;
   left: 100%;
   width: 700px;
+  height: 100%;
+  background-color: white;
+  animation: ${(props) => (props.slideAct ? slideInLeft : null)} 1s linear forwards;
+`;
+
+const webDIV = styled.div`
+  position: absolute;
+  top: 100px;
+  left: 100%;
+  width: 600px;
   height: 100%;
   background-color: white;
   animation: ${(props) => (props.slideAct ? slideInLeft : null)} 1s linear forwards;
